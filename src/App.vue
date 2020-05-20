@@ -1,28 +1,55 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <div :style="{'height': heightOfHeaderComputed}">
+      <Header @heightOfHeader="getHeightOfHeader"/>
+    </div>
+    <div>
+      <router-view/>
+    </div>
+    <div :style="{'height': heightOfFooterComputed}">
+      <Footer @heightOfFooter="getHeightOfFooter"/>
+    </div>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  components: {
+    Header,
+    Footer
+  },
+
+  data() {
+    return {
+      heightOfFooter: 0,
+      heightOfHeader: 0,
+    }
+  },
+
+  methods: {
+    getHeightOfFooter(value) {
+      this.heightOfFooter = value;
+    },
+    getHeightOfHeader(value) {
+      this.heightOfHeader = value;
+    }
+  },
+  computed: {
+    heightOfFooterComputed() {
+      let height = this.heightOfFooter + 'px';
+      return height;
+    },
+    heightOfHeaderComputed() {
+      let height = this.heightOfHeader + 'px';
+      return height;
+    }
+  }
+};
+</script>
+<style scoped>
 </style>
